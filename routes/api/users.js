@@ -49,7 +49,7 @@ router.post(
 
       // If a user has not been found with the above email then get users gravatar
       const avatar = gravatar.url(email, { s: "200", r: "pg", d: "mm" });
-      // create new user using destructoring
+      // create new user using destructuring
       user = new User({
         name,
         email,
