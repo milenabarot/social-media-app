@@ -71,12 +71,14 @@ const ProfileSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
+      // had to change from & to type to string as education PUT route
+      // didn't like that I was sending date down in string- even though fine for Experience
       from: {
-        type: Date,
+        type: String,
         required: true,
       },
       to: {
-        type: Date,
+        type: String,
       },
       current: {
         type: Boolean,
