@@ -1,4 +1,0 @@
-{
-  "mongoURI": "mongodb+srv://mel1:mel1@socialmediadata.vpfal.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-  "jwtSecret": "mysecrettoken"
-}
