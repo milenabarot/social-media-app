@@ -145,23 +145,35 @@ router.put("/like/:id", auth, async (req, res) => {
 router.put("/unlike/:id", auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
+    const userOfUnliker = await User.findById(req.user.id);
+    const { name: nameOfUnliker } = userOfUnliker;
+    // const nameOfUnliker = userOfUnliker.name;
 
     //Check if the post has already been liked by this user
+    // because user can't dislike a post they haven't liked
+
+    const hasUserLikedPost = post.likes.some(
+      (like) => like.user.toString() === req.user.id
+    );
     console.log(post.likes, req.user.id);
-    if (!post.likes.some((like) => like.user.toString() === req.user.id)) {
-      return res.status(400).json({ msg: "Post has not yet been liked" });
+
+    if (hasUserLikedPost === false) {
+      return res
+        .status(400)
+        .json({ msg: `Post has not yet been liked by ${nameOfUnliker}` });
     }
 
-    //Get the remove index
-
-    // const removeIndex = post.likes.map((like) => {
-    //   like.user.toString().indexOf(req.user.id);
-    // });
-
     // remove the like
-    post.likes = post.likes.filter(
-      ({ user }) => user.toString() !== req.user.id
-    );
+    // update the like array with only the users that still like the post
+
+    post.likes = post.likes.filter((like) => {
+      const isUserUnlikingPost = like.user.toString() === req.user.id;
+      if (isUserUnlikingPost) {
+        return false;
+      }
+      return true;
+      // like.user.toString() !== req.user.id
+    });
 
     await post.save();
 
