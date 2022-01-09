@@ -167,6 +167,10 @@ router.put("/unlike/:id", auth, async (req, res) => {
     // update the like array with only the users that still like the post
 
     post.likes = post.likes.filter((like) => {
+      // if the user that is requesting to unlike the post is equal to the
+      // user who has liked the post then return false, and don't keep that like
+      // in the post.likes array. Else if the user who has liked the post is not
+      // the one requesting to unlike it, keep that like in the post.likes array
       const isUserUnlikingPost = like.user.toString() === req.user.id;
       if (isUserUnlikingPost) {
         return false;
@@ -228,6 +232,7 @@ router.post(
 );
 
 // @route   DELETE api/posts/comment/:id/:comment_id
+// pass through the post id and then the comment id
 // @desc    Delete comment
 // @access  Private
 
@@ -253,11 +258,30 @@ router.delete("/comment/:id/:comment_id", auth, async (req, res) => {
     }
     // get remove index
 
-    const removeIndex = post.comments.map((comment) =>
-      comment.user.toString().indexOf(req.user.id)
-    );
+    // const removeIndex = post.comments.map((comment) =>
+    //   comment.user.toString().indexOf(req.user.id)
+    // );
 
-    post.comments.splice(removeIndex, 1);
+    // post.likes = post.likes.filter((like) => {
+
+    //   const isUserUnlikingPost = like.user.toString() === req.user.id;
+    //   if (isUserUnlikingPost) {
+    //     return false;
+    //   }
+    //   return true;
+    //   // like.user.toString() !== req.user.id
+    // });
+
+    // this code instead of the above get remove index. I used same functionality as for the unliking post
+    post.comments = post.comments.filter((comment) => {
+      const findCorrectComment = comment.id === req.params.comment_id;
+      if (findCorrectComment) {
+        return false;
+      }
+      return true;
+    });
+
+    // post.comments.splice(removeIndex, 1);
 
     await post.save();
     res.json(post.comments);
