@@ -8,6 +8,7 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  LOGOUT,
 } from "./types";
 
 //ACTION
@@ -98,4 +99,10 @@ export const login = (email, password) => async (dispatch) => {
       // don't need a payload here, as we aren't doing anything else with the state
     });
   }
+};
+
+// Logout / Clear the profile
+
+export const logout = () => (dispatch) => {
+  dispatch({ type: LOGOUT });
 };
