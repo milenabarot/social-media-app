@@ -3,6 +3,8 @@ import {
   REGISTER_FAIL,
   USER_LOADED,
   AUTH_ERROR,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
 } from "../actions/types";
 
 //REDUCER
@@ -19,7 +21,7 @@ export default function (state = initalState, action) {
 
   switch (type) {
     case USER_LOADED:
-      //use will be set to the payload - name, email, avatar (but no password as - in route)
+      //user will be set to the payload - name, email, avatar (but no password as - in route)
       return {
         ...state,
         isAuthenticated: true,
@@ -28,6 +30,7 @@ export default function (state = initalState, action) {
       };
 
     case REGISTER_SUCCESS:
+    case LOGIN_SUCCESS:
       localStorage.setItem("token", payload.token);
       return {
         ...state,
@@ -37,6 +40,7 @@ export default function (state = initalState, action) {
       };
     case REGISTER_FAIL:
     case AUTH_ERROR:
+    case LOGIN_FAIL:
       localStorage.removeItem("token");
       return {
         ...state,

@@ -6,6 +6,8 @@ import {
   REGISTER_FAIL,
   USER_LOADED,
   AUTH_ERROR,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
 } from "./types";
 
 //ACTION
@@ -51,6 +53,8 @@ export const register =
         type: REGISTER_SUCCESS,
         payload: res.data,
       });
+
+      dispatch(loadUser());
     } catch (err) {
       const errors = err.response.data.errors;
 
@@ -64,3 +68,34 @@ export const register =
       });
     }
   };
+
+//LOGIN USER
+
+export const login = (email, password) => async (dispatch) => {
+  // don't need a config object for axios as default types are already set correctly
+  // axios stringifies JSON for us, so no need to do that too
+
+  // const body = JSON.stringify({ name, email, password })
+
+  try {
+    const res = await axios.post("/api/auth", { email, password });
+    console.log(res);
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data,
+    });
+
+    dispatch(loadUser());
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+    }
+
+    dispatch({
+      type: LOGIN_FAIL,
+      // don't need a payload here, as we aren't doing anything else with the state
+    });
+  }
+};
