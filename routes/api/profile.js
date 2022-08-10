@@ -5,6 +5,8 @@ const config = require("config");
 const auth = require("../../middleware/auth");
 const Profile = require("../../models/Profile");
 const User = require("../../models/User");
+const Post = require("../../models/Post");
+
 const { check, validationResult } = require("express-validator");
 // bring in normalize to give us a proper url, regardless of what user entered
 // TO DO normalize stuff later on
@@ -159,6 +161,10 @@ router.delete("/", auth, async (req, res) => {
   try {
     // pass in user which is object ID, which we match to the request user ID
     // as this is private, so we have access to the token
+
+    // Remove user posts
+    await Post.deleteMany({ user: req.user.id });
+
     // Remove profile
     // ** TO DO - remove users posts
     await Profile.findOneAndRemove({ user: req.user.id });
