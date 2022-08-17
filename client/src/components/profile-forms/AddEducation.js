@@ -32,14 +32,14 @@ const AddEducation = ({ addEducation }) => {
 
   return (
     <section className="container">
-      <h1 classname="large text-primary">Add Your Education</h1>
-      <p classname="lead">
-        <i classname="fas fa-code-branch"></i> Add any school or bootcamp that
+      <h1 className="large text-primary">Add Your Education</h1>
+      <p className="lead">
+        <i className="fas fa-code-branch"></i> Add any school or bootcamp that
         you have attended
       </p>
       <small>* = required field</small>
-      <form classname="form" onSubmit={onSubmit}>
-        <div classname="form-group">
+      <form className="form" onSubmit={onSubmit}>
+        <div className="form-group">
           <input
             type="text"
             placeholder="* School or Bootcamp"
@@ -49,7 +49,7 @@ const AddEducation = ({ addEducation }) => {
             required
           />
         </div>
-        <div classname="form-group">
+        <div className="form-group">
           <input
             type="text"
             placeholder="* Degree or certificate"
@@ -59,7 +59,7 @@ const AddEducation = ({ addEducation }) => {
             required
           />
         </div>
-        <div classname="form-group">
+        <div className="form-group">
           <input
             type="text"
             placeholder="Field of study"
@@ -68,11 +68,11 @@ const AddEducation = ({ addEducation }) => {
             onChange={onChange}
           />
         </div>
-        <div classname="form-group">
+        <div className="form-group">
           <h4>From Date</h4>
           <input type="date" name="from" value={from} onChange={onChange} />
         </div>
-        <div classname="form-group">
+        <div className="form-group">
           <p>
             <input
               type="checkbox"
@@ -88,7 +88,7 @@ const AddEducation = ({ addEducation }) => {
             Current School
           </p>
         </div>
-        <div classname="form-group">
+        <div className="form-group">
           <h4>To Date</h4>
           <input
             type="date"
@@ -98,7 +98,7 @@ const AddEducation = ({ addEducation }) => {
             disabled={toDateDisabled ? "disabled" : ""}
           />
         </div>
-        <div classname="form-group">
+        <div className="form-group">
           <textarea
             name="description"
             value={description}
@@ -108,7 +108,7 @@ const AddEducation = ({ addEducation }) => {
             placeholder="Programme Description"
           ></textarea>
         </div>
-        <input type="submit" classname="btn btn-primary my-1" />
+        <input type="submit" className="btn btn-primary my-1" />
         <Link className="btn btn-light my-1" to="/dashboard">
           Go Back
         </Link>
